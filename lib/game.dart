@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+
 class Game {
   List<List<Map<String, dynamic>>> board = List.generate(3, (_) => List.generate(3, (_) => {'mark': '', 'age': 0}));
   String currentPlayer = '❌';
@@ -12,7 +14,7 @@ class Game {
   }
 
   bool makeMove(int row, int col) {
-    if (board[row][col]['mark'] == '') {
+    if (board[row][col]['mark'] == '' || board[row][col]['age'] > 5) {
       board[row][col] = {'mark': currentPlayer, 'age': 0};
       currentPlayer = currentPlayer == '❌' ? '⭕' : '❌';
       ageMarks();
@@ -26,7 +28,7 @@ class Game {
       for (int j = 0; j < 3; j++) {
         if (board[i][j]['mark'] != '') {
           board[i][j]['age'] += 1;
-          if (board[i][j]['age'] >= 3) {
+          if (board[i][j]['age'] > 5) {
             board[i][j] = {'mark': '', 'age': 0};
           }
         }
@@ -55,5 +57,23 @@ class Game {
       return 'draw';
     }
     return '';
+  }
+
+  Color getMarkColor(String mark, int age) {
+    Color baseColor = mark == '❌' ? Colors.black : Colors.red;
+    switch (age) {
+      case 0:
+        return baseColor;
+      case 1:
+        return baseColor.withOpacity(0.75);
+      case 2:
+        return baseColor.withOpacity(0.5);
+      case 3:
+        return baseColor.withOpacity(0.25);
+      case 4:
+        return baseColor.withOpacity(0.1);
+      default:
+        return Colors.transparent;
+    }
   }
 }
