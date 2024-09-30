@@ -50,7 +50,7 @@ class _TicTacToeScreenState extends State<TicTacToeScreen> {
                               context: context,
                               builder: (context) => AlertDialog(
                                 title: Text('Game Over'),
-                                content: Text('$winner wins!'),
+                                content: Text(winner == 'draw' ? 'It\'s a draw!' : '$winner wins!'),
                                 actions: [
                                   TextButton(
                                     onPressed: () {
@@ -59,7 +59,7 @@ class _TicTacToeScreenState extends State<TicTacToeScreen> {
                                       });
                                       Navigator.of(context).pop();
                                     },
-                                    child: Text('Play Again'),
+                                    child: Text('Rematch'),
                                   ),
                                 ],
                               ),
